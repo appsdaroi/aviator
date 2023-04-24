@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Canvas = () => {
   const [grid, setGrid] = useState({
@@ -25,6 +25,8 @@ const Canvas = () => {
     e: [0, 0, 0, 0, 0],
   });
 
+  const [showResults, setShowResults] = useState(false);
+
   const setPlace = (char, index) => {
     const currCharGrid = grid[char];
     const currClicked = clicked[char];
@@ -33,8 +35,8 @@ const Canvas = () => {
 
     setClicked({
       ...clicked,
-      [char]: currCharGrid
-    })
+      [char]: currCharGrid,
+    });
 
     if (bombs[char][index] == 1) {
       currCharGrid[index] = 2;
@@ -52,6 +54,30 @@ const Canvas = () => {
       [char]: currCharGrid,
     });
   };
+
+  useEffect(() => {
+    if (showResults) {
+      setGrid({
+        a: [1, 1, 1, 1, 1],
+        b: [1, 1, 1, 1, 1],
+        c: [1, 1, 1, 1, 1],
+        d: [1, 1, 1, 1, 1],
+        e: [1, 1, 1, 1, 1],
+      });
+
+      setTimeout(() => {
+        setShowResults(false);
+
+        setGrid({
+          a: [0, 0, 0, 0, 0],
+          b: [0, 0, 0, 0, 0],
+          c: [0, 0, 0, 0, 0],
+          d: [0, 0, 0, 0, 0],
+          e: [0, 0, 0, 0, 0],
+        });
+      }, 3000);
+    }
+  }, [showResults]);
 
   return (
     <div className="grid items-center justify-center grid-rows-5 gap-2">
@@ -73,6 +99,14 @@ const Canvas = () => {
                 <button
                   onClick={() => setPlace(char, index)}
                   className="relative w-[60px] h-[43px] bg-[linear-gradient(to_bottom,#f9b519,#f77811)] border-[3px] border-[#ed9a0f] rounded-[6px] shadow-[#c45c07_0px_3px_0px] after:absolute after:left-1/2 after:-translate-x-1/2 after:top-1/2 after:-translate-y-1/2 after:w-7 after:h-7 after:bg-[url('/icons/icon-star.svg')] after:bg-center after:bg-contain"
+                />
+              );
+
+            if (grid[char][index] == 1 && bombs[char][index] == 1)
+              return (
+                <button
+                  onClick={() => setPlace(char, index)}
+                  className="relative w-[60px] h-[43px] bg-[linear-gradient(to_bottom,#043560,#0d4173)] border-[3px] border-[#015196] rounded-[6px] shadow-[#093666_0px_3px_0px] after:absolute after:left-1/2 after:-translate-x-1/2 after:top-1/2 after:-translate-y-1/2 after:w-7 after:h-7 after:bg-[url('/icons/icon-bomb.svg')] after:bg-center after:bg-contain"
                 />
               );
 
