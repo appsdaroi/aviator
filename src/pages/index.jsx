@@ -1,333 +1,142 @@
 import { useContext, useEffect } from "react";
-
 import { getSession } from "next-auth/react";
-import { moneyContext } from "@/services/moneyContext";
 
-import Image from "next/image";
-import Link from "next/link";
-
-import { toDollars } from "@/helpers/format";
-import { randomBetweenRange } from "@/helpers/random";
+import { Canvas } from "@/modules/canvas";
 
 import { signOut } from "next-auth/react";
 
-import Cookies from "js-cookie";
-
 export default function Home({ session }) {
-  const { money, setMoney } = useContext(moneyContext);
-
-  useEffect(() => {
-    console.log(money);
-
-    Cookies.set("balance", money);
-  }, [money]);
-
   return (
-    <>
-      <nav className="fixed top-0 z-50 flex items-center w-full gap-5 px-3 py-2 font-bold text-white bg-black">
-        <div className="bg-[#9E009E] border border-[#FF5DFF] grid grid-cols-2 px-3 py-0 rounded-lg h-11 flex-1 items-center justify-center">
-          <div className="flex items-center">
-            <i className="mr-3 text-2xl fa fa-coins text-[#FF69FF]" />
-            SALDO
-          </div>
-          <span className="text-center">{toDollars(money)}</span>
-        </div>
+    <div className="relative top-0 bottom-0 left-0 right-0 w-screen h-screen">
+      <div className="absolute top-0 bottom-0 left-0 right-0 bg-[#131419] p-[5px]">
+        <div className="w-full h-full shadow-[inset_1px_1px_#ffffff3b] relative rounded-[12px] bg-[linear-gradient(-57deg,#0048dc_3%,#0781cc_85%)] overflow-hidden">
+          <div className="top-auto bottom-0 h-[36px] p-[5px] absolute w-full">
+            <div className="flex items-center h-full">
+              <div className="bg-[#0267a5] w-full flex items-center pr-[15px] h-full border border-px border-black relative rounded-[20px] shadow-[inset_1px_1px_#fff1cd33] max-w-[122px] after:absolute after:right-[10px] after:top-[8px] after:w-[10px] after:h-[10px] after:bg-[url('/icons/icon-dd-arrow.svg')] after:bg-no-repeat after:bg-center after:bg-contain">
+                <span className="flex items-center justify-center w-full text-sm text-white">
+                  MINES
+                </span>
+              </div>
 
-        <div className="bg-[#00AC05] flex items-center justify-center gap-1 px-3 py-3 rounded-lg mr-2 animate-attention">
-          <div className="w-4 h-4">
-            <svg
-              id="Layer_1"
-              x="0px"
-              y="0px"
-              viewBox="0 0 194 194"
-              fill="white"
-            >
-              <g>
-                {" "}
-                <path
-                  id="path2376_2_"
-                  d="M147.04,144.34c-7.02,0-13.6-2.7-18.57-7.67L101.7,109.9c-1.84-1.84-5.18-1.84-7.02,0L67.8,136.78  c-4.97,4.97-11.55,7.67-18.57,7.67h-5.29l34.01,34.01c10.58,10.58,27.85,10.58,38.43,0l34.11-34.11L147.04,144.34L147.04,144.34z"
-                ></path>{" "}
-                <path
-                  id="path2380_2_"
-                  d="M49.12,49.55c7.02,0,13.6,2.7,18.57,7.67L94.57,84.1c1.94,1.94,5.07,1.94,7.02,0l26.88-26.77  c4.97-4.97,11.55-7.67,18.57-7.67h3.24l-34.11-34.11c-10.58-10.58-27.85-10.58-38.43,0L43.72,49.55H49.12L49.12,49.55z"
-                ></path>{" "}
-                <path
-                  id="path2384_2_"
-                  d="M178.45,77.84l-20.62-20.62c-0.43,0.22-0.97,0.32-1.51,0.32h-9.39c-4.86,0-9.61,1.94-12.95,5.4  L107.2,89.71c-2.48,2.48-5.83,3.78-9.07,3.78c-3.35,0-6.59-1.3-9.07-3.78L62.18,62.83c-3.45-3.45-8.2-5.4-12.95-5.4H37.68  c-0.54,0-0.97-0.11-1.4-0.32L15.55,77.84c-10.58,10.58-10.58,27.85,0,38.43l20.62,20.62c0.43-0.22,0.86-0.32,1.4-0.32h11.55  c4.86,0,9.61-1.94,12.95-5.4l26.88-26.88c4.86-4.86,13.39-4.86,18.24,0l26.77,26.77c3.45,3.45,8.2,5.4,12.95,5.4h9.39  c0.54,0,0.97,0.11,1.51,0.32l20.62-20.62C189.03,105.58,189.03,88.42,178.45,77.84"
-                ></path>
-              </g>
-            </svg>
-          </div>
-          SACAR
-        </div>
-      </nav>
+              <div className="w-[22px] h-[22px] ml-[5px] flex items-center rounded-[17px] justify-center text-center bg-[linear-gradient(to_bottom,#f9a119,#f38410)]">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  xmlns="http://www.w3.org/2000/svg"
+                  _ngcontent-umj-c65=""
+                  aria-hidden="true"
+                  className="scale-[1.128]"
+                >
+                  <g fill="#3c0606" fill-rule="nonzero">
+                    <path d="M8.667 12a.667.667 0 1 1-1.334 0 .667.667 0 0 1 1.334 0z"></path>
+                    <path d="M8 16c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8zM8 1C4.14 1 1 4.14 1 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7z"></path>
+                    <path d="M8 9.833a.5.5 0 0 1-.5-.5V8.66c0-.635.403-1.203 1.001-1.415.797-.28 1.332-1.129 1.332-1.745A1.835 1.835 0 0 0 8 3.667 1.835 1.835 0 0 0 6.167 5.5a.5.5 0 0 1-1 0A2.837 2.837 0 0 1 8 2.667 2.837 2.837 0 0 1 10.833 5.5c0 1.112-.878 2.293-1.999 2.689a.5.5 0 0 0-.334.472v.672a.5.5 0 0 1-.5.5z"></path>
+                  </g>
+                </svg>
+              </div>
 
-      <div className="top-0 flex items-center invisible w-full gap-5 px-3 py-2 font-bold text-white bg-black">
-        <div className="bg-[#9E009E] border border-[#FF5DFF] grid grid-cols-2 px-3 py-0 rounded-lg h-11 flex-1 items-center justify-center">
-          <div className="flex items-center">
-            <i className="mr-3 text-2xl fa fa-coins text-[#FF69FF]" />
-            SALDO
-          </div>
-          <span className="text-center"></span>
-        </div>
+              <div className="relative flex items-center ml-auto mr-2 text-sm text-white">
+                226.89
+                <span className="ml-1 text-white/50">BRL</span>
+              </div>
 
-        <div className="bg-[#00AC05] flex items-center justify-center gap-1 px-3 py-3 rounded-lg mr-2 animate__pulse">
-          <div className="w-4 h-4">
-            <svg
-              id="Layer_1"
-              x="0px"
-              y="0px"
-              viewBox="0 0 194 194"
-              fill="white"
-            >
-              <g>
-                {" "}
-                <path
-                  id="path2376_2_"
-                  d="M147.04,144.34c-7.02,0-13.6-2.7-18.57-7.67L101.7,109.9c-1.84-1.84-5.18-1.84-7.02,0L67.8,136.78  c-4.97,4.97-11.55,7.67-18.57,7.67h-5.29l34.01,34.01c10.58,10.58,27.85,10.58,38.43,0l34.11-34.11L147.04,144.34L147.04,144.34z"
-                ></path>{" "}
-                <path
-                  id="path2380_2_"
-                  d="M49.12,49.55c7.02,0,13.6,2.7,18.57,7.67L94.57,84.1c1.94,1.94,5.07,1.94,7.02,0l26.88-26.77  c4.97-4.97,11.55-7.67,18.57-7.67h3.24l-34.11-34.11c-10.58-10.58-27.85-10.58-38.43,0L43.72,49.55H49.12L49.12,49.55z"
-                ></path>{" "}
-                <path
-                  id="path2384_2_"
-                  d="M178.45,77.84l-20.62-20.62c-0.43,0.22-0.97,0.32-1.51,0.32h-9.39c-4.86,0-9.61,1.94-12.95,5.4  L107.2,89.71c-2.48,2.48-5.83,3.78-9.07,3.78c-3.35,0-6.59-1.3-9.07-3.78L62.18,62.83c-3.45-3.45-8.2-5.4-12.95-5.4H37.68  c-0.54,0-0.97-0.11-1.4-0.32L15.55,77.84c-10.58,10.58-10.58,27.85,0,38.43l20.62,20.62c0.43-0.22,0.86-0.32,1.4-0.32h11.55  c4.86,0,9.61-1.94,12.95-5.4l26.88-26.88c4.86-4.86,13.39-4.86,18.24,0l26.77,26.77c3.45,3.45,8.2,5.4,12.95,5.4h9.39  c0.54,0,0.97,0.11,1.51,0.32l20.62-20.62C189.03,105.58,189.03,88.42,178.45,77.84"
-                ></path>
-              </g>
-            </svg>
+              <div className="bg-[#0267a5] flex items-center pr-[15px] basis-[26px] h-[26px] border border-px border-black relative rounded-[20px] shadow-[inset_1px_1px_#fff1cd33] bg-[url('/icons/icon-burguer-menu.svg')] bg-center bg-no-repeat"></div>
+            </div>
           </div>
-          SACAR
+
+          <div className="h-full pb-[179px]">
+            <div className="flex flex-col justify-between h-full">
+              <div className="flex flex-col justify-between items-center mt-[2px] p-[0_2px]">
+                <div className="h-[26px] flex justify-between items-center bg-[#15171969] w-full rounded-[12px]">
+                  <div className="bg-[#0267a5] w-[140px] flex items-center pr-[15px] h-full border border-px border-black relative rounded-[20px] shadow-[inset_1px_1px_#fff1cd33] after:absolute after:right-[5px] after:top-[8px] after:w-[10px] after:h-[10px] after:bg-[url('/icons/icon-dd-arrow.svg')] after:bg-no-repeat after:bg-center after:bg-contain">
+                    <span className="flex items-center justify-center w-full text-xs text-white">
+                      Mines: 3
+                    </span>
+                  </div>
+
+                  <div className="bg-[#ffc107] flex items-center justify-center h-full border border-px border-black relative rounded-[20px] shadow-[inset_1px_1px_#fff1cd33] gap-1.5 px-4">
+                    <span className="flex items-center justify-center text-xs text-black">
+                      Next:
+                    </span>
+                    <span className="flex items-center justify-center text-sm text-black">
+                      3.3 BRL
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="w-[90%] py-0 px-[5px] aspect-square h-auto mx-auto flex items-center justify-center">
+                <Canvas/>
+              </div>
+
+              <div className="flex justify-center mb-[10px] w-full px-[5px] py-[2px] gap-1">
+                <div className="bg-[#0267a5] flex items-center h-full border border-px border-black relative rounded-[20px] shadow-[inset_1px_1px_#fff1cd33] w-1/2">
+                  <span className="flex items-center justify-center w-full text-sm text-white">
+                    RANDOM
+                  </span>
+                </div>
+
+                <div className="bg-black/30 rounded-full h-[26px] text-white text-sm flex items-center justify-center w-1/2 relative pl-[2.25rem]">
+                  <svg
+                    width="22"
+                    height="18"
+                    viewBox="0 0 22 18"
+                    xmlns="http://www.w3.org/2000/svg"
+                    _ngcontent-umj-c81=""
+                    aria-hidden="true"
+                    className="absolute left-[4px] top-1/2 -translate-y-1/2"
+                  >
+                    <g fill="#FFF" fill-rule="nonzero" _ngcontent-umj-c81="">
+                      <path
+                        d="M6.321 10.271a.524.524 0 0 0-.395-.868H4.58a6.09 6.09 0 0 1 6.07-6.486c1.612 0 3.08.63 4.169 1.657l1.898-2.221A8.935 8.935 0 0 0 10.65 0a8.941 8.941 0 0 0-6.364 2.636 8.941 8.941 0 0 0-2.627 6.767H.525c-.45 0-.69.53-.395.868l2.558 2.934.538.617 1.929-2.213L6.32 10.27zM21.17 8.559 19.26 6.37l-1.187-1.362-1.696 1.945-1.4 1.606a.524.524 0 0 0 .395.868h1.345a6.091 6.091 0 0 1-6.068 5.656 6.053 6.053 0 0 1-3.724-1.276l-1.898 2.221A8.931 8.931 0 0 0 10.65 18a8.941 8.941 0 0 0 6.364-2.636 8.935 8.935 0 0 0 2.626-5.937h1.135c.45 0 .69-.53.394-.868z"
+                        _ngcontent-umj-c81=""
+                      ></path>
+                    </g>
+                  </svg>
+
+                  <div className="relative inline-block text-xs before:bg-[#ffffff42] before:top-1/2 before:-translate-y-1/2 before:left-[-2.25rem] before:w-[1.75rem] before:h-[16px] before:rounded-full before:absolute after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[calc(-2.25rem+2px)] after:w-[calc(1rem-4px)] after:h-[calc(1rem-4px)] after:rounded-full after:bg-white">
+                    Auto game
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="h-[145px] bottom-[34px] pb-0 p-[0_2px_2px] absolute w-full">
+            <div className="flex flex-col-reverse items-center justify-center bg-black/30 rounded-[12px] h-full gap-4">
+              <div className="bg-[#0267a5] shadow-[inset_1px_1px_#fff1cd33] min-w-[300px] max-w-[300px] h-[50px] rounded-full border border-black/50 flex items-center">
+                <div className="ml-[14px] flex flex-col justify-center items-center h-[40px] w-[150px] text-sm text-white">
+                  <span className="leading-none">Bet, BRL</span>
+                  <span className="w-[142px] h-[22px] rounded-[11px] border border-black/60 bg-[#0000004d]">
+                    <span className="flex justify-center items-center font-semibold text-[16px] leading-none mt-[1.5px]">
+                      10.00
+                    </span>
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-center w-full gap-1">
+                  <button className="w-[36px] h-[32px] relative text-sm bg-[#0267a5] shadow-[inset_1px_1px_#fff1cd33] border border-black/50 rounded-full after:absolute after:right-0 after:top-0 after:w-full after:h-full after:bg-[url('/icons/icon-minus.svg')] after:bg-no-repeat after:bg-center" />
+                  <div className="w-[38px] h-[36px] relative text-sm bg-[#0267a5] shadow-[inset_1px_1px_#fff1cd33] border border-black/50 rounded-full after:absolute after:right-0 after:top-0 after:w-full after:h-full after:bg-[url('/icons/icon-coin.svg')] after:bg-no-repeat after:bg-center" />
+                  <button className="w-[36px] h-[32px] relative text-sm bg-[#0267a5] shadow-[inset_1px_1px_#fff1cd33] border border-black/50 rounded-full after:absolute after:right-0 after:top-0 after:w-full after:h-full after:bg-[url('/icons/icon-plus.svg')] after:bg-no-repeat after:bg-center" />
+                </div>
+              </div>
+
+              <div className="w-[310px] flex gap-2">
+                <button className="bg-[radial-gradient(circle_at_50%_50%,#0576dc,#025cd5_68%)] min-w-[50px] max-w-[50px] h-[50px] rounded-full border-2 border-black/90 shadow-[3px_3px_6px_#020b1a80,inset_-1px_-1px_#00000052,inset_1px_1px_#fff1cd33]">
+                  <i className="block w-full h-full bg-[url('/icons/icon-auto-play.svg')] bg-center bg-no-repeat" />
+                </button>
+
+                <button className="bg-[radial-gradient(circle_at_50%_50%,#61a503,#2d7500_94%)] w-full h-[50px] rounded-[20px] border-2 border-black/90 shadow-[3px_3px_6px_#020b1a80,inset_-1px_-1px_#00000052,inset_1px_1px_#fff1cd33] text-center relative text-white text-sm">
+                  <i className="absolute left-[14px] top-1/2 -translate-y-1/2 w-[19px] h-[23px] bg-[url('/icons/icon-play.svg')] bg-center bg-no-repeat" />
+                  BET
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <section className="relative px-3 pb-3">
-        <div className="absolute top-0 bottom-0 left-0 right-0 bg-black/40"></div>
-
-        <span className="relative flex items-center justify-center gap-2 pt-2 pb-1 text-xl text-white z-1">
-          <span>
-            <i className="fas fa-tshirt" />
-          </span>
-          <span className="font-black">AVALIE OS LOOKS ABAIXO:</span>
-        </span>
-
-        <div className="relative z-1 flex flex-col items-center justify-center bg-black border border-white rounded-xl shadow-[0px_0px_10px_0px_rgba(255,255,255,0.35)]">
-          <Image
-            src="/logo-shien.png"
-            width={170}
-            height={100}
-            className="py-2"
-          />
-          <div className="relative w-[94%] h-[422px]">
-            <Image src="/1.png" layout="fill" objectFit="contain" />
-          </div>
-
-          <span className="py-1 text-lg font-extrabold text-white">
-            VOCÊ GOSTOU DESSE LOOK?
-          </span>
-
-          <div className="grid items-center justify-center grid-cols-2 gap-10 pb-4">
-            <a
-              href="#2"
-              onClick={() =>
-                setMoney(money + parseInt(`1${randomBetweenRange(10, 99)}`))
-              }
-              className="shadow-[-1px_0px_13px_5px_rgba(23.999999999999858,255,0,0.29)] hover:scale-90 transition-transform flex items-center justify-center gap-2 text-white bg-[#139A05] border border-[#18FF00] rounded-[5px] px-2.5 py-0.5"
-            >
-              <i class="far fa-thumbs-up"></i>
-              <span className="py-1 font-extrabold tracking-tight text-white">
-                SIM, GOSTEI
-              </span>
-            </a>
-
-            <a
-              href="#2"
-              onClick={() =>
-                setMoney(money + parseInt(`1${randomBetweenRange(10, 99)}`))
-              }
-              className="shadow-[-1px_0px_13px_5px_rgba(255,0,0,0.38)] hover:scale-90 transition-transform flex items-center justify-center gap-2 text-white bg-[#A70202] border border-[#FF0000] rounded-[5px] px-2.5 py-0.5"
-            >
-              <i class="far fa-thumbs-down"></i>
-              <span className="py-1 font-extrabold tracking-tight text-white">
-                NÃO GOSTEI
-              </span>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section id="2" className="relative p-3">
-        <div className="absolute top-0 bottom-0 left-0 right-0 bg-black/40"></div>
-
-        <div className="relative z-1 flex flex-col items-center justify-center bg-black border border-white rounded-xl shadow-[0px_0px_10px_0px_rgba(255,255,255,0.35)]">
-          <Image
-            src="/logo-shien.png"
-            width={170}
-            height={100}
-            className="py-2"
-          />
-          <div className="relative w-[94%] h-[422px]">
-            <Image src="/2.png" layout="fill" objectFit="contain" />
-          </div>
-
-          <span className="py-1 text-lg font-extrabold text-white">
-            VOCÊ GOSTOU DESSE LOOK?
-          </span>
-
-          <div className="grid items-center justify-center grid-cols-2 gap-10 pb-4">
-            <a
-              onClick={() =>
-                setMoney(money + parseInt(`1${randomBetweenRange(10, 99)}`))
-              }
-              href="#3"
-              className="shadow-[-1px_0px_13px_5px_rgba(23.999999999999858,255,0,0.29)] hover:scale-90 transition-transform flex items-center justify-center gap-2 text-white bg-[#139A05] border border-[#18FF00] rounded-[5px] px-2.5 py-0.5"
-            >
-              <i class="far fa-thumbs-up"></i>
-              <span className="py-1 font-extrabold tracking-tight text-white">
-                SIM, GOSTEI
-              </span>
-            </a>
-
-            <a
-              onClick={() =>
-                setMoney(money + parseInt(`1${randomBetweenRange(10, 99)}`))
-              }
-              href="#3"
-              className="shadow-[-1px_0px_13px_5px_rgba(255,0,0,0.38)] hover:scale-90 transition-transform flex items-center justify-center gap-2 text-white bg-[#A70202] border border-[#FF0000] rounded-[5px] px-2.5 py-0.5"
-            >
-              <i class="far fa-thumbs-down"></i>
-              <span className="py-1 font-extrabold tracking-tight text-white">
-                NÃO GOSTEI
-              </span>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section id="3" className="relative p-3">
-        <div className="absolute top-0 bottom-0 left-0 right-0 bg-black/40"></div>
-
-        <div className="relative z-1 flex flex-col items-center justify-center bg-black border border-white rounded-xl shadow-[0px_0px_10px_0px_rgba(255,255,255,0.35)]">
-          <Image
-            src="/logo-shien.png"
-            width={170}
-            height={100}
-            className="py-2"
-          />
-          <div className="relative w-[94%] h-[422px]">
-            <Image src="/3.png" layout="fill" objectFit="contain" />
-          </div>
-
-          <span className="py-1 text-lg font-extrabold text-white">
-            VOCÊ GOSTOU DESSE LOOK?
-          </span>
-
-          <div className="grid items-center justify-center grid-cols-2 gap-10 pb-4">
-            <a
-              onClick={() =>
-                setMoney(money + parseInt(`1${randomBetweenRange(10, 99)}`))
-              }
-              href="#4"
-              className="shadow-[-1px_0px_13px_5px_rgba(23.999999999999858,255,0,0.29)] hover:scale-90 transition-transform flex items-center justify-center gap-2 text-white bg-[#139A05] border border-[#18FF00] rounded-[5px] px-2.5 py-0.5"
-            >
-              <i class="far fa-thumbs-up"></i>
-              <span className="py-1 font-extrabold tracking-tight text-white">
-                SIM, GOSTEI
-              </span>
-            </a>
-
-            <a
-              onClick={() =>
-                setMoney(money + parseInt(`1${randomBetweenRange(10, 99)}`))
-              }
-              href="#4"
-              className="shadow-[-1px_0px_13px_5px_rgba(255,0,0,0.38)] hover:scale-90 transition-transform flex items-center justify-center gap-2 text-white bg-[#A70202] border border-[#FF0000] rounded-[5px] px-2.5 py-0.5"
-            >
-              <i class="far fa-thumbs-down"></i>
-              <span className="py-1 font-extrabold tracking-tight text-white">
-                NÃO GOSTEI
-              </span>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section id="4" className="relative p-3">
-        <div className="absolute top-0 bottom-0 left-0 right-0 bg-black/40"></div>
-
-        <div className="relative z-1 flex flex-col items-center justify-center bg-black border border-white rounded-xl shadow-[0px_0px_10px_0px_rgba(255,255,255,0.35)]">
-          <Image
-            src="/logo-shien.png"
-            width={170}
-            height={100}
-            className="py-2"
-          />
-          <div className="relative w-[94%] h-[422px]">
-            <Image src="/4.png" layout="fill" objectFit="contain" />
-          </div>
-
-          <span className="py-1 text-lg font-extrabold text-white">
-            VOCÊ GOSTOU DESSE LOOK?
-          </span>
-
-          <div className="grid items-center justify-center grid-cols-2 gap-10 pb-4">
-            <Link
-              onClick={() =>
-                setMoney(money + parseInt(`1${randomBetweenRange(10, 99)}`))
-              }
-              href="/progress"
-              className="shadow-[-1px_0px_13px_5px_rgba(23.999999999999858,255,0,0.29)] hover:scale-90 transition-transform flex items-center justify-center gap-2 text-white bg-[#139A05] border border-[#18FF00] rounded-[5px] px-2.5 py-0.5"
-            >
-              <i class="far fa-thumbs-up"></i>
-              <span className="py-1 font-extrabold tracking-tight text-white">
-                SIM, GOSTEI
-              </span>
-            </Link>
-
-            <Link
-              onClick={() =>
-                setMoney(money + parseInt(`1${randomBetweenRange(10, 99)}`))
-              }
-              href="/progress"
-              className="shadow-[-1px_0px_13px_5px_rgba(255,0,0,0.38)] hover:scale-90 transition-transform flex items-center justify-center gap-2 text-white bg-[#A70202] border border-[#FF0000] rounded-[5px] px-2.5 py-0.5"
-            >
-              <i class="far fa-thumbs-down"></i>
-              <span className="py-1 font-extrabold tracking-tight text-white">
-                NÃO GOSTEI
-              </span>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <footer
-        className="fixed bottom-0 flex w-full text-white bg-black"
-        onClick={() => signOut()}
-      >
-        <div className="flex items-center justify-center w-1/5 py-3">
-          <i className="text-4xl fas fa-bars" />
-        </div>
-        <div className="flex items-center justify-center w-3/5 py-3 bg-[#292929] rounded-2xl">
-          <i className="text-4xl fas fa-home" />
-        </div>
-        <div className="flex items-center justify-center w-1/5 py-3">
-          <i className="text-4xl fas fa-user-circle" />
-        </div>
-      </footer>
-
-      <div className="flex invisible w-full text-white bg-black">
-        <div className="flex items-center justify-center w-1/5 py-3">
-          <i className="text-4xl fas fa-bars" />
-        </div>
-        <div className="flex items-center justify-center w-3/5 py-3 bg-[#292929] rounded-2xl">
-          <i className="text-4xl fas fa-home" />
-        </div>
-        <div className="flex items-center justify-center w-1/5 py-3">
-          <i className="text-4xl fas fa-user-circle" />
-        </div>
-      </div>
-    </>
+    </div>
   );
 }
 

@@ -2,18 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 65px;
-}
-
-html * {
-    font-family: 'Poppins', sans-serif;
-}
-
-section {
-    background-image: url("/section-bg.jpg");
-    background-position: center;
-    background-repeat: repeat;
-    background-size: 703px auto;
+* {
+    font-family: Roboto;
 }
