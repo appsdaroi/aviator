@@ -45,7 +45,7 @@ export default function Home({ session }) {
     setBalance(balance - betAmountOptions[betAmountOption] * 100);
 
     await axios
-      .post("http://apimines.appsdaroi.com.br/find-game.php")
+      .post("https://apimines.appsdaroi.com.br/find-game.php")
       .then((res) => {
         console.log(res);
         setBombs(res.data.game, setPlaying(!playing));
