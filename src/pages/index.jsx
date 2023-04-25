@@ -5,6 +5,7 @@ import { Canvas } from "@/modules/canvas";
 import { signOut } from "next-auth/react";
 
 import axios from "axios";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Home({ session }) {
   const [bombs, setBombs] = useState({
@@ -20,6 +21,7 @@ export default function Home({ session }) {
   const [playing, setPlaying] = useState(false);
   const [inactive, setInactive] = useState(false);
   const [showResults, setShowResults] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
 
   const [betAmountOption, setBetAmountOption] = useState(0);
   const betAmountOptions = [
@@ -35,11 +37,13 @@ export default function Home({ session }) {
 
     setBalance(balance + betAmount * 100);
     setShowResults(true);
+    setShowNotification(true);
 
     setInactive(true);
     setPlaying(!playing);
 
     setTimeout(() => {
+      setShowNotification(false);
       setInactive(false);
       setShowResults(false);
     }, 3000);
@@ -51,9 +55,6 @@ export default function Home({ session }) {
     await axios
       .post("https://apimines.appsdaroi.com.br/find-game.php", { page: game })
       .then((res) => {
-        console.log(res.data.total)
-        console.log(game)
-        console.log(res.data.total > game)
         if (res.data.total > game) setGame(game + 1);
         setBombs(res.data.game, setPlaying(!playing));
       });
@@ -79,7 +80,7 @@ export default function Home({ session }) {
                 </span>
               </div>
 
-              <div className="w-[22px] h-[22px] ml-[5px] flex items-center rounded-[17px] justify-center text-center bg-[linear-gradient(to_bottom,#f9a119,#f38410)]">
+              <div className="w-[22px] h-[22px] ml-[5px] mr-auto flex items-center rounded-[17px] justify-center text-center bg-[linear-gradient(to_bottom,#f9a119,#f38410)]">
                 <svg
                   width="16"
                   height="16"
@@ -97,7 +98,22 @@ export default function Home({ session }) {
                 </svg>
               </div>
 
-              <div className="relative flex items-center ml-auto mr-2 text-sm text-white">
+              <AnimatePresence>
+                {showNotification && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="bg-[#16901e] px-2 flex items-center border border-px border-black rounded-[20px] shadow-[inset_1px_1px_#fff1cd33]"
+                  >
+                    <span className="flex items-center justify-center w-full text-[13px] text-white">
+                      +{betAmount.toFixed(2)} BRL
+                    </span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              <div className="relative flex items-center mr-2 text-sm text-white">
                 {(balance / 100).toFixed(2)}
                 <span className="ml-1 text-white/50">BRL</span>
               </div>
