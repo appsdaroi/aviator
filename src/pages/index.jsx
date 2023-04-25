@@ -1,8 +1,7 @@
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getSession } from "next-auth/react";
 
 import { Canvas } from "@/modules/canvas";
-
 import { signOut } from "next-auth/react";
 
 import axios from "axios";
