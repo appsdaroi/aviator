@@ -15,6 +15,8 @@ export default function Home({ session }) {
     e: [0, 0, 0, 0, 0],
   });
 
+  const [game, setGame] = useState(1);
+
   const [playing, setPlaying] = useState(false);
   const [inactive, setInactive] = useState(false);
   const [showResults, setShowResults] = useState(false);
@@ -47,9 +49,12 @@ export default function Home({ session }) {
     setBalance(balance - betAmountOptions[betAmountOption] * 100);
 
     await axios
-      .post("https://apimines.appsdaroi.com.br/find-game.php")
+      .post("https://apimines.appsdaroi.com.br/find-game.php", { page: game })
       .then((res) => {
-        console.log(res);
+        console.log(res.data.total)
+        console.log(game)
+        console.log(res.data.total > game)
+        if (res.data.total > game) setGame(game + 1);
         setBombs(res.data.game, setPlaying(!playing));
       });
   };

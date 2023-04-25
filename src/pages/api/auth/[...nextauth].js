@@ -31,7 +31,7 @@ export default NextAuth({
         };
 
         const db = await axios.get(
-          "https://api.jsonbin.io/v3/b/64471c7e9d312622a351809e ",
+          "https://api.jsonbin.io/v3/b/64471c7e9d312622a351809e",
           config
         );
 
