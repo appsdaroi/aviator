@@ -1,11 +1,65 @@
-import { useContext, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import { getSession } from "next-auth/react";
 
 import { Canvas } from "@/modules/canvas";
 
 import { signOut } from "next-auth/react";
 
+import axios from "axios";
+
 export default function Home({ session }) {
+  const [bombs, setBombs] = useState({
+    a: [0, 0, 0, 0, 0],
+    b: [0, 0, 0, 0, 0],
+    c: [0, 0, 0, 0, 0],
+    d: [0, 0, 0, 0, 0],
+    e: [0, 0, 0, 0, 0],
+  });
+
+  const [playing, setPlaying] = useState(false);
+  const [inactive, setInactive] = useState(false);
+
+  const [betAmountOption, setBetAmountOption] = useState(0);
+  const betAmountOptions = [
+    1, 2, 3, 4, 5, 6, 7, 8, 12, 20, 40, 100, 200, 400, 500,
+  ];
+
+  const [betAmount, setBetAmount] = useState(betAmountOptions[betAmountOption]);
+
+  const [balance, setBalance] = useState(session.user.balance);
+
+  const handleGameStatus = () => {
+    if (!playing) return getBombPositions();
+
+    setBalance(balance + betAmount * 100);
+
+    setInactive(true);
+    setPlaying(!playing);
+
+    setTimeout(() => {
+      setInactive(false);
+    }, 3000);
+  };
+
+  const getBombPositions = async () => {
+    setBalance(balance - betAmountOptions[betAmountOption] * 100);
+
+    await axios
+      .post("http://apimines.appsdaroi.com.br/find-game.php")
+      .then((res) => {
+        console.log(res);
+        setBombs(res.data.game, setPlaying(!playing));
+      });
+  };
+
+  useEffect(() => {
+    console.log(bombs);
+  }, [bombs]);
+
+  useEffect(() => {
+    setBetAmount(betAmountOptions[betAmountOption]);
+  }, [betAmountOption]);
+
   return (
     <div className="relative top-0 bottom-0 left-0 right-0 w-screen h-screen">
       <div className="absolute top-0 bottom-0 left-0 right-0 bg-[#131419] p-[5px]">
@@ -37,7 +91,7 @@ export default function Home({ session }) {
               </div>
 
               <div className="relative flex items-center ml-auto mr-2 text-sm text-white">
-                226.89
+                {(balance / 100).toFixed(2)}
                 <span className="ml-1 text-white/50">BRL</span>
               </div>
 
@@ -48,7 +102,10 @@ export default function Home({ session }) {
           <div className="h-full pb-[179px]">
             <div className="flex flex-col justify-between h-full">
               <div className="flex flex-col justify-between items-center mt-[2px] p-[0_2px]">
-                <div className="h-[26px] flex justify-between items-center bg-[#15171969] w-full rounded-[12px]">
+                <div
+                  onClick={signOut}
+                  className="h-[26px] flex justify-between items-center bg-[#15171969] w-full rounded-[12px]"
+                >
                   <div className="bg-[#0267a5] w-[140px] flex items-center pr-[15px] h-full border border-px border-black relative rounded-[20px] shadow-[inset_1px_1px_#fff1cd33] after:absolute after:right-[5px] after:top-[8px] after:w-[10px] after:h-[10px] after:bg-[url('/icons/icon-dd-arrow.svg')] after:bg-no-repeat after:bg-center after:bg-contain">
                     <span className="flex items-center justify-center w-full text-xs text-white">
                       Mines: 3
@@ -60,22 +117,32 @@ export default function Home({ session }) {
                       Next:
                     </span>
                     <span className="flex items-center justify-center text-sm text-black">
-                      3.3 BRL
+                      {betAmount.toFixed(2)} BRL
                     </span>
                   </div>
                 </div>
               </div>
 
               <div className="w-[90%] py-0 px-[5px] aspect-square h-auto mx-auto flex items-center justify-center">
-                <Canvas/>
+                <Canvas
+                  bombs={bombs}
+                  status={{ playing, setPlaying }}
+                  amount={{ betAmount, setBetAmount }}
+                  baseAmount={betAmountOptions[betAmountOption]}
+                  inactiveState={{ inactive, setInactive }}
+                  userBalance={{ balance, setBalance }}
+                />
               </div>
 
               <div className="flex justify-center mb-[10px] w-full px-[5px] py-[2px] gap-1">
-                <div className="bg-[#0267a5] flex items-center h-full border border-px border-black relative rounded-[20px] shadow-[inset_1px_1px_#fff1cd33] w-1/2">
+                <button
+                  disabled={!playing}
+                  className="bg-[#0267a5] flex items-center h-full border border-px border-black relative rounded-[20px] shadow-[inset_1px_1px_#fff1cd33] w-1/2"
+                >
                   <span className="flex items-center justify-center w-full text-sm text-white">
                     RANDOM
                   </span>
-                </div>
+                </button>
 
                 <div className="bg-black/30 rounded-full h-[26px] text-white text-sm flex items-center justify-center w-1/2 relative pl-[2.25rem]">
                   <svg
@@ -95,9 +162,12 @@ export default function Home({ session }) {
                     </g>
                   </svg>
 
-                  <div className="relative inline-block text-xs before:bg-[#ffffff42] before:top-1/2 before:-translate-y-1/2 before:left-[-2.25rem] before:w-[1.75rem] before:h-[16px] before:rounded-full before:absolute after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[calc(-2.25rem+2px)] after:w-[calc(1rem-4px)] after:h-[calc(1rem-4px)] after:rounded-full after:bg-white">
+                  <button
+                    disabled={playing}
+                    className="relative inline-block text-xs before:bg-[#ffffff42] before:top-1/2 before:-translate-y-1/2 before:left-[-2.25rem] before:w-[1.75rem] before:h-[16px] before:rounded-full before:absolute after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[calc(-2.25rem+2px)] after:w-[calc(1rem-4px)] after:h-[calc(1rem-4px)] after:rounded-full after:bg-white"
+                  >
                     Auto game
-                  </div>
+                  </button>
                 </div>
               </div>
             </div>
@@ -105,32 +175,67 @@ export default function Home({ session }) {
 
           <div className="h-[145px] bottom-[34px] pb-0 p-[0_2px_2px] absolute w-full">
             <div className="flex flex-col-reverse items-center justify-center bg-black/30 rounded-[12px] h-full gap-4">
-              <div className="bg-[#0267a5] shadow-[inset_1px_1px_#fff1cd33] min-w-[300px] max-w-[300px] h-[50px] rounded-full border border-black/50 flex items-center">
+              <div
+                className={`bg-[#0267a5] shadow-[inset_1px_1px_#fff1cd33] min-w-[300px] max-w-[300px] h-[50px] rounded-full border border-black/50 flex items-center ${
+                  playing && "opacity-50 pointer-events-none"
+                }`}
+              >
                 <div className="ml-[14px] flex flex-col justify-center items-center h-[40px] w-[150px] text-sm text-white">
                   <span className="leading-none">Bet, BRL</span>
                   <span className="w-[142px] h-[22px] rounded-[11px] border border-black/60 bg-[#0000004d]">
                     <span className="flex justify-center items-center font-semibold text-[16px] leading-none mt-[1.5px]">
-                      10.00
+                      {betAmountOptions[betAmountOption].toFixed(2)}
                     </span>
                   </span>
                 </div>
 
                 <div className="flex items-center justify-center w-full gap-1">
-                  <button className="w-[36px] h-[32px] relative text-sm bg-[#0267a5] shadow-[inset_1px_1px_#fff1cd33] border border-black/50 rounded-full after:absolute after:right-0 after:top-0 after:w-full after:h-full after:bg-[url('/icons/icon-minus.svg')] after:bg-no-repeat after:bg-center" />
+                  <button
+                    onClick={() =>
+                      betAmountOption > 0 &&
+                      setBetAmountOption(betAmountOption - 1)
+                    }
+                    className="w-[36px] h-[32px] relative text-sm bg-[#0267a5] shadow-[inset_1px_1px_#fff1cd33] border border-black/50 rounded-full after:absolute after:right-0 after:top-0 after:w-full after:h-full after:bg-[url('/icons/icon-minus.svg')] after:bg-no-repeat after:bg-center"
+                  />
                   <div className="w-[38px] h-[36px] relative text-sm bg-[#0267a5] shadow-[inset_1px_1px_#fff1cd33] border border-black/50 rounded-full after:absolute after:right-0 after:top-0 after:w-full after:h-full after:bg-[url('/icons/icon-coin.svg')] after:bg-no-repeat after:bg-center" />
-                  <button className="w-[36px] h-[32px] relative text-sm bg-[#0267a5] shadow-[inset_1px_1px_#fff1cd33] border border-black/50 rounded-full after:absolute after:right-0 after:top-0 after:w-full after:h-full after:bg-[url('/icons/icon-plus.svg')] after:bg-no-repeat after:bg-center" />
+                  <button
+                    onClick={() =>
+                      betAmountOption + 1 < betAmountOptions.length &&
+                      setBetAmountOption(betAmountOption + 1)
+                    }
+                    className="w-[36px] h-[32px] relative text-sm bg-[#0267a5] shadow-[inset_1px_1px_#fff1cd33] border border-black/50 rounded-full after:absolute after:right-0 after:top-0 after:w-full after:h-full after:bg-[url('/icons/icon-plus.svg')] after:bg-no-repeat after:bg-center"
+                  />
                 </div>
               </div>
 
               <div className="w-[310px] flex gap-2">
-                <button className="bg-[radial-gradient(circle_at_50%_50%,#0576dc,#025cd5_68%)] min-w-[50px] max-w-[50px] h-[50px] rounded-full border-2 border-black/90 shadow-[3px_3px_6px_#020b1a80,inset_-1px_-1px_#00000052,inset_1px_1px_#fff1cd33]">
+                <button
+                  disabled={!playing}
+                  className="bg-[radial-gradient(circle_at_50%_50%,#0576dc,#025cd5_68%)] min-w-[50px] max-w-[50px] h-[50px] rounded-full border-2 border-black/90 shadow-[3px_3px_6px_#020b1a80,inset_-1px_-1px_#00000052,inset_1px_1px_#fff1cd33]"
+                >
                   <i className="block w-full h-full bg-[url('/icons/icon-auto-play.svg')] bg-center bg-no-repeat" />
                 </button>
 
-                <button className="bg-[radial-gradient(circle_at_50%_50%,#61a503,#2d7500_94%)] w-full h-[50px] rounded-[20px] border-2 border-black/90 shadow-[3px_3px_6px_#020b1a80,inset_-1px_-1px_#00000052,inset_1px_1px_#fff1cd33] text-center relative text-white text-sm">
-                  <i className="absolute left-[14px] top-1/2 -translate-y-1/2 w-[19px] h-[23px] bg-[url('/icons/icon-play.svg')] bg-center bg-no-repeat" />
-                  BET
-                </button>
+                {playing ? (
+                  <button
+                    onClick={handleGameStatus}
+                    className=" flex flex-col items-center justify-center bg-[radial-gradient(circle_at_50%_50%,#ee3f00,#b32b00_94%)] w-full h-[50px] rounded-[20px] border-2 border-black/90 shadow-[3px_3px_6px_#020b1a80,inset_-1px_-1px_#00000052,inset_1px_1px_#fff1cd33] text-center relative text-white text-sm"
+                  >
+                    CASH OUT
+                    <span className="min-w-[48px] h-[15px] bg-black/40 rounded-[4px] flex items-center justify-center px-[8px] text-xs mx-auto">
+                      {betAmount.toFixed(2)} BRL
+                    </span>
+                  </button>
+                ) : (
+                  <button
+                    disabled={inactive}
+                    onClick={handleGameStatus}
+                    className="bg-[radial-gradient(circle_at_50%_50%,#61a503,#2d7500_94%)] w-full h-[50px] rounded-[20px] border-2 border-black/90 shadow-[3px_3px_6px_#020b1a80,inset_-1px_-1px_#00000052,inset_1px_1px_#fff1cd33] text-center relative text-white text-sm"
+                  >
+                    <i className="absolute left-[14px] top-1/2 -translate-y-1/2 w-[19px] h-[23px] bg-[url('/icons/icon-play.svg')] bg-center bg-no-repeat" />
+                    BET
+                  </button>
+                )}
               </div>
             </div>
           </div>

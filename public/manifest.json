@@ -4,8 +4,8 @@
     "display": "standalone",
     "scope": "/",
     "start_url": "/",
-    "name": "Money Looks",
-    "short_name": "ML",
+    "name": "Mines",
+    "short_name": "Mines",
     "icons": [
         {
             "src": "/icon-192x192.png",

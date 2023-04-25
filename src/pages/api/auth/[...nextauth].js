@@ -31,7 +31,7 @@ export default NextAuth({
         };
 
         const db = await axios.get(
-          "https://api.jsonbin.io/v3/b/642eb873ace6f33a2205d83f",
+          "https://api.jsonbin.io/v3/b/64471c7e9d312622a351809e ",
           config
         );
 
@@ -57,7 +57,7 @@ export default NextAuth({
 
         await axios({
           method: "put",
-          url: "https://api.jsonbin.io/v3/b/642eb873ace6f33a2205d83f",
+          url: "https://api.jsonbin.io/v3/b/64471c7e9d312622a351809e ",
           headers: {
             "X-Master-Key":
               "$2b$10$qo5bE7wh/z3fVPs.xyH6W.jly4sXaI7d3T3LoiqfYl8Rkw0U1JThi",
