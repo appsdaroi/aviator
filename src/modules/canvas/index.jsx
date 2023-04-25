@@ -1,9 +1,10 @@
 import { useState, useEffect, useReducer } from "react";
 
-const Canvas = ({ bombs, status, amount, inactiveState, baseAmount }) => {
+const Canvas = ({ bombs, status, amount, inactiveState, baseAmount, showCards }) => {
   const { playing, setPlaying } = status;
   const { betAmount, setBetAmount } = amount;
   const { inactive, setInactive } = inactiveState;
+  const { showResults, setShowResults } = showCards;
 
   const [grid, setGrid] = useState({
     a: [0, 0, 0, 0, 0],
@@ -21,7 +22,6 @@ const Canvas = ({ bombs, status, amount, inactiveState, baseAmount }) => {
     e: [false, false, false, false, false],
   });
 
-  const [showResults, setShowResults] = useState(false);
   const [_, forceUpdate] = useReducer((x) => x + 1, 0);
 
   const setPlace = (char, index) => {

@@ -18,6 +18,7 @@ export default function Home({ session }) {
 
   const [playing, setPlaying] = useState(false);
   const [inactive, setInactive] = useState(false);
+  const [showResults, setShowResults] = useState(false);
 
   const [betAmountOption, setBetAmountOption] = useState(0);
   const betAmountOptions = [
@@ -32,12 +33,14 @@ export default function Home({ session }) {
     if (!playing) return getBombPositions();
 
     setBalance(balance + betAmount * 100);
+    setShowResults(true);
 
     setInactive(true);
     setPlaying(!playing);
 
     setTimeout(() => {
       setInactive(false);
+      setShowResults(false);
     }, 3000);
   };
 
@@ -131,6 +134,7 @@ export default function Home({ session }) {
                   baseAmount={betAmountOptions[betAmountOption]}
                   inactiveState={{ inactive, setInactive }}
                   userBalance={{ balance, setBalance }}
+                  showCards={{ showResults, setShowResults }}
                 />
               </div>
 
