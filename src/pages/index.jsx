@@ -61,7 +61,7 @@ export default function Home({ session }) {
   }, [betAmountOption]);
 
   return (
-    <div className="relative top-0 bottom-0 left-0 right-0 w-screen h-screen">
+    <div className="relative top-0 bottom-0 left-0 right-0 w-full h-full">
       <div className="absolute top-0 bottom-0 left-0 right-0 bg-[#131419] p-[5px]">
         <div className="w-full h-full shadow-[inset_1px_1px_#ffffff3b] relative rounded-[12px] bg-[linear-gradient(-57deg,#0048dc_3%,#0781cc_85%)] overflow-hidden">
           <div className="top-auto bottom-0 h-[36px] p-[5px] absolute w-full">

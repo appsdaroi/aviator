@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+    background: black;
+    font-family: Roboto,sans-serif;
+    overflow-y: hidden;
+    width: 1px;
+    min-width: 100%;
+    height: 100%;
+}
+
+#__next {
+    height: 100%;
+}
+
 *, button {
     font-family: Roboto !important;
 }
