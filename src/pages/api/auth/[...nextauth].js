@@ -22,53 +22,73 @@ export default NextAuth({
         username: { label: "Username", type: "text", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
       },
+
       async authorize(credentials, req) {
-        const config = {
-          headers: {
-            "X-Master-Key":
-              "$2b$10$qo5bE7wh/z3fVPs.xyH6W.jly4sXaI7d3T3LoiqfYl8Rkw0U1JThi",
-          },
-        };
+        // const config = {
+        //   headers: {
+        //     "X-Master-Key":
+        //       "$2b$10$qo5bE7wh/z3fVPs.xyH6W.jly4sXaI7d3T3LoiqfYl8Rkw0U1JThi",
+        //   },
+        // };
 
-        const db = await axios.get(
-          "https://api.jsonbin.io/v3/b/64471c7e9d312622a351809e",
-          config
-        );
+        // const db = await axios.get(
+        //   "https://api.jsonbin.io/v3/b/64471c7e9d312622a351809e",
+        //   config
+        // );
 
-        const dbUser = _.find(
-          db.data.record.users,
-          (user) =>
-            user.username === credentials.username &&
-            user.password === credentials.password
-        );
+        // const dbUser = _.find(
+        //   db.data.record.users,
+        //   (user) =>
+        //     user.username === credentials.username &&
+        //     user.password === credentials.password
+        // );
 
-        const currentData = db.data.record;
+        // if (!dbUser) return
 
-        dbUser.balance = randomBetweenRange(250000, 800000);
+        // const currentData = db.data.record;
 
-        const thisIndex = _.findIndex(
-          currentData.users,
-          (user) =>
-            user.username === credentials.username &&
-            user.password === credentials.password
-        );
+        // dbUser.balance = randomBetweenRange(250000, 800000);
 
-        currentData.users.splice(thisIndex, 1, dbUser);
+        // const thisIndex = _.findIndex(
+        //   currentData.users,
+        //   (user) =>
+        //     user.username === credentials.username &&
+        //     user.password === credentials.password
+        // );
 
-        await axios({
-          method: "put",
-          url: "https://api.jsonbin.io/v3/b/64471c7e9d312622a351809e ",
-          headers: {
-            "X-Master-Key":
-              "$2b$10$qo5bE7wh/z3fVPs.xyH6W.jly4sXaI7d3T3LoiqfYl8Rkw0U1JThi",
-          },
-          data: currentData,
-        });
+        // currentData.users.splice(thisIndex, 1, dbUser);
 
-        console.log(dbUser);
-        if (dbUser) return dbUser;
+        // await axios({
+        //   method: "put",
+        //   url: "https://api.jsonbin.io/v3/b/64471c7e9d312622a351809e ",
+        //   headers: {
+        //     "X-Master-Key":
+        //       "$2b$10$qo5bE7wh/z3fVPs.xyH6W.jly4sXaI7d3T3LoiqfYl8Rkw0U1JThi",
+        //   },
+        //   data: currentData,
+        // });
+        const user = {};
 
-        return null;
+        try {
+          const api = await axios.post(
+            "https://apimines.appsdaroi.com.br/api/login",
+            {
+              login: credentials.username,
+              password: credentials.password,
+            }
+          );
+          console.log(api.data);
+
+          user.id = api.data.user.id;
+          user.token = api.data.token;
+          user.username = api.data.user.login;
+          user.balance = randomBetweenRange(250000, 800000);
+
+          return user;
+        } catch (err) {
+          console.log(err);
+          return;
+        }
       },
     }),
   ],
@@ -78,6 +98,7 @@ export default NextAuth({
         token.id = user.id;
         token.username = user.username;
         token.balance = user.balance;
+        token.token = user.token;
       }
 
       return token;
@@ -87,6 +108,7 @@ export default NextAuth({
         session.user.username = token.username;
         session.user.id = token.id;
         session.user.balance = token.balance;
+        session.user.token = token.token;
       }
 
       return session;

@@ -53,9 +53,10 @@ export default function Home({ session }) {
     setBalance(balance - betAmountOptions[betAmountOption] * 100);
 
     await axios
-      .post("https://apimines.appsdaroi.com.br/find-game.php", { page: game })
+      .get("https://apimines.appsdaroi.com.br/api/result", {
+        headers: { Authorization: `Bearer ${session.user.token}` },
+      })
       .then((res) => {
-        if (res.data.total > game) setGame(game + 1);
         setBombs(res.data.game, setPlaying(!playing));
       });
   };
