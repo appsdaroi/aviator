@@ -108,7 +108,8 @@ export default function Home({ session }) {
                           <span className="flex flex-col items-center justify-center">
                             <label className="uppercase">Bet</label>
                             <label>
-                              <span className="text-2xl"></span>
+                              <span className="text-2xl">1.00</span>
+                              <span>BRL</span>
                             </label>
                           </span>
                         </button>
