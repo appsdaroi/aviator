@@ -13,6 +13,8 @@ module.exports = {
       },
       animation: {
         attention: 'attention 2s ease-in-out infinite',
+        'spin-slow': 'spin 1.2s linear infinite',
+        'spin-slower': 'spin 25s linear infinite'
       }
     },
   },
