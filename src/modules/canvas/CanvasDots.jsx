@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-const Canvas = (props) => {
+const CanvasDots = (props) => {
   const canvasRef = useRef(null);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -92,4 +92,4 @@ const Canvas = (props) => {
   return <canvas ref={canvasRef} {...props} />;
 };
 
-export { Canvas };
+export { CanvasDots };

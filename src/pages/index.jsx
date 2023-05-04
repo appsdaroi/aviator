@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { getSession } from "next-auth/react";
 
 import ProgressBar from "@/modules/progressBar";
-import { Canvas } from "@/modules/canvas";
+import { CanvasDots, CanvasPlane } from "@/modules/canvas";
 import { signOut } from "next-auth/react";
 
 import axios from "axios";
@@ -61,7 +61,7 @@ export default function Home({ session }) {
 
           return multiplier + 0.01;
         });
-      }, 60);
+      }, 70);
     }
   }, [playing]);
 
@@ -195,7 +195,7 @@ export default function Home({ session }) {
                           </span>
 
                           {height !== 0 && width !== 0 && (
-                            <Canvas
+                            <CanvasDots
                               height={height}
                               width={width}
                               className="absolute top-0 left-0 bottom-0 right-0 z-[1]"
@@ -218,11 +218,22 @@ export default function Home({ session }) {
                     </>
                   )}
 
+                  {height !== 0 && width !== 0 && (
+                    <CanvasPlane
+                      height={height}
+                      width={width}
+                      className="absolute top-0 left-0 bottom-0 right-0 z-[1]"
+                      animate={multiplier > 2.0}
+                    />
+                  )}
+
                   <svg
                     width="438px"
                     height="334px"
                     viewBox="0 0 438 334"
-                    className={`absolute top-0 bottom-0 left-0 right-0 z-[1] scale-90 transition-opacity ${playing && !crashed ? 'opacity-70' : 'opacity-0'}`}
+                    className={`absolute top-0 bottom-0 left-0 right-0 z-[1] scale-90 transition-opacity ${
+                      playing && !crashed ? "opacity-70" : "opacity-0"
+                    }`}
                   >
                     <defs>
                       <filter
