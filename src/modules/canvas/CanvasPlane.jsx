@@ -59,7 +59,14 @@ const CanvasPlane = (props) => {
       // Desenhar a linha até o ponto final
       ctx.lineTo(x2, y2);
     
-      // Finalizar o desenho
+      // Desenhar um retângulo sólido na cor desejada abaixo da curva parabólica
+      ctx.lineTo(x2, canvas.height);
+      ctx.lineTo(x1, canvas.height);
+      ctx.closePath();
+      ctx.fillStyle = "red";
+      ctx.fill();
+    
+      // Finalizar o desenho da linha
       ctx.stroke();
     
       // Desenha a próxima etapa da animação
