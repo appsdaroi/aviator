@@ -24,8 +24,7 @@ const CanvasDots = (props) => {
         let xPos =
           ((horizontalLineLength - i * pointSpacing + x) %
             horizontalLineLength) +
-          pointSpacing / 2 +
-          20; // Adiciona um espaçamento de 20 pixels à esquerda
+          pointSpacing / 2 + 20; // Adiciona um espaçamento de 20 pixels à esquerda
         if (xPos < 0) {
           xPos += horizontalLineLength;
         }

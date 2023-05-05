@@ -14,40 +14,54 @@ const CanvasPlane = (props) => {
     let t = 0; // tempo
     const steps = (animationTime / 1000) * 60; // número de etapas para a animação, baseado no tempo de duração e na taxa de atualização do navegador (60 fps)
     const controlPoints = [
-      [0, canvas.height],
-      [canvas.width / 2, canvas.height / 2 + 100],
-      [canvas.width / 2, canvas.height / 2 - 100],
-      [canvas.width, 0],
+      [image.width / 1.7, canvas.height - image.height],
+      [canvas.width * 0.8, canvas.height - image.height],
+      [canvas.width - 60, 40],
     ];
 
     const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const x = cubicBezier(controlPoints, t)[0] - image.width / 4;
-      const y = cubicBezier(controlPoints, t)[1] - image.height / 4;
-      ctx.drawImage(image, x, y, image.width / 2, image.height / 2);
-
-      // Desenha a linha vermelha fixa na parte inferior esquerda do canvas
-      ctx.strokeStyle = "red";
+      const x = parabolicBezier(controlPoints, t)[0] - image.width / 3.7;
+      const y = parabolicBezier(controlPoints, t)[1] - image.height / 3.7;
+      ctx.drawImage(image, x, y, image.width / 1.7, image.height / 1.7);
+    
+      // Definir os pontos iniciais e finais da linha
+      const x1 = 40;
+      const y1 = canvas.height - 40;
+      const x2 = x + 10;
+      const y2 = y + 40;
+    
+      // Definir os pontos de controle da curva parabólica
+      const controlX = (x1 + x2) / 2;
+      const controlY = Math.max(y1, y2) * 1.1;
+    
+      // Definir a cor da linha
       ctx.lineWidth = 4;
-
-      // Desenha a curva de Bezier que acompanha a animação da imagem
-      const bezierControlPoints = [
-        [0, canvas.height],
-        [controlPoints[0][0] + (controlPoints[1][0] - controlPoints[0][0]) / 2, controlPoints[1][1] + (canvas.height - controlPoints[1][1]) / 2],
-        [controlPoints[2][0] + (controlPoints[3][0] - controlPoints[2][0]) / 2, controlPoints[2][1] - (controlPoints[2][1] - 0) / 2],
-        [canvas.width, 0],
-      ];
+      ctx.strokeStyle = "#e50539";
+    
+      // Iniciar o caminho do desenho
       ctx.beginPath();
-      ctx.moveTo(0, canvas.height);
-      const curvePoints = [];
-      for (let i = 0; i <= steps; i++) {
-        const bezierT = i / steps;
-        const point = cubicBezier(bezierControlPoints, bezierT);
-        ctx.lineTo(point[0], point[1]);
-        curvePoints.push(point);
+    
+      // Mover para o ponto inicial da linha
+      ctx.moveTo(x1, y1);
+    
+      // Chamar a função quadraticBezier() para desenhar a curva parabólica
+      for (let t = 0; t <= 1; t += 0.01) {
+        const [x, y] = quadraticBezier(
+          [x1, y1],
+          [controlX, controlY],
+          [x2, y2],
+          t
+        );
+        ctx.lineTo(x, y);
       }
+    
+      // Desenhar a linha até o ponto final
+      ctx.lineTo(x2, y2);
+    
+      // Finalizar o desenho
       ctx.stroke();
-
+    
       // Desenha a próxima etapa da animação
       if (t <= 1) {
         requestAnimationFrame(render);
@@ -59,21 +73,28 @@ const CanvasPlane = (props) => {
     render();
   }, [animationTime]);
 
-
-  // Função para calcular o ponto em uma curva de Bézier cúbica para um valor de tempo t (entre 0 e 1)
-  const cubicBezier = (controlPoints, t) => {
-    const x =
-      (1 - t) ** 3 * controlPoints[0][0] +
-      3 * (1 - t) ** 2 * t * controlPoints[1][0] +
-      3 * (1 - t) * t ** 2 * controlPoints[2][0] +
-      t ** 3 * controlPoints[3][0];
-    const y =
-      (1 - t) ** 3 * controlPoints[0][1] +
-      3 * (1 - t) ** 2 * t * controlPoints[1][1] +
-      3 * (1 - t) * t ** 2 * controlPoints[2][1] +
-      t ** 3 * controlPoints[3][1];
+  function parabolicBezier(controlPoints, t) {
+    const [p0, p1, p2] = controlPoints;
+    const x = (1 - t) ** 2 * p0[0] + 2 * (1 - t) * t * p1[0] + t ** 2 * p2[0];
+    const y = (1 - t) ** 2 * p0[1] + 2 * (1 - t) * t * p1[1] + t ** 2 * p2[1];
     return [x, y];
-  };
+  }
+
+  function quadraticBezier(p0, p1, p2, t) {
+    var pFinal = [];
+    var p0_p1 = interpolate(p0, p1, t);
+    var p1_p2 = interpolate(p1, p2, t);
+    pFinal = interpolate(p0_p1, p1_p2, t);
+    return pFinal;
+  }
+  
+  function interpolate(p0, p1, t) {
+    var pFinal = [];
+    for (var i = 0; i < p0.length; i++) {
+      pFinal.push((1 - t) * p0[i] + t * p1[i]);
+    }
+    return pFinal;
+  }
 
   return <canvas ref={canvasRef} {...props} />;
 };
