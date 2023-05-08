@@ -51,7 +51,7 @@ export default function Document() {
           rel="stylesheet"
         />
       </Head>
-      <body>
+      <body className="overflow-y-scroll">
         <Main />
         <NextScript />
       </body>

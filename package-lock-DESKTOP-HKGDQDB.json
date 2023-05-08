@@ -8,14 +8,12 @@
       "name": "mines",
       "version": "0.1.0",
       "dependencies": {
-        "@faker-js/faker": "^7.6.0",
         "@fortawesome/fontawesome-svg-core": "^6.4.0",
         "@ramonak/react-progress-bar": "^5.0.3",
         "axios": "^1.3.4",
         "eslint": "8.36.0",
         "eslint-config-next": "13.2.4",
         "framer-motion": "^10.6.0",
-        "give-me-an-avatar": "^1.0.0",
         "howler": "^2.2.3",
         "js-cookie": "^3.0.1",
         "lodash": "^4.17.21",
@@ -24,12 +22,10 @@
         "next": "13.2.4",
         "next-auth": "^4.20.1",
         "next-pwa": "^5.6.0",
-        "p5": "^1.6.0",
         "react": "18.2.0",
         "react-countup": "^6.4.2",
         "react-device-detect": "^2.2.3",
         "react-dom": "18.2.0",
-        "react-p5": "^1.3.35",
         "sweetalert2": "^11.7.3",
         "sweetalert2-react-content": "^5.0.7"
       },
@@ -1745,15 +1741,6 @@
         "node": "^12.22.0 || ^14.17.0 || >=16.0.0"
       }
     },
-    "node_modules/@faker-js/faker": {
-      "version": "7.6.0",
-      "resolved": "https://registry.npmjs.org/@faker-js/faker/-/faker-7.6.0.tgz",
-      "integrity": "sha512-XK6BTq1NDMo9Xqw/YkYyGjSsg44fbNwYRx7QK2CuoQgyy+f1rrTDHoExVM5PsyXCtfl2vs2vVJ0MN0yN6LppRw==",
-      "engines": {
-        "node": ">=14.0.0",
-        "npm": ">=6.0.0"
-      }
-    },
     "node_modules/@fortawesome/fontawesome-common-types": {
       "version": "6.4.0",
       "resolved": "https://registry.npmjs.org/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-6.4.0.tgz",
@@ -2362,11 +2349,6 @@
       "version": "18.15.11",
       "resolved": "https://registry.npmjs.org/@types/node/-/node-18.15.11.tgz",
       "integrity": "sha512-E5Kwq2n4SbMzQOn6wnmBjuK9ouqlURrcZDVfbo9ftDDTFt3nk7ZKK4GMOzoYgnpQJKcxwQw+lGaBvvlMo0qN/Q=="
-    },
-    "node_modules/@types/p5": {
-      "version": "1.3.3",
-      "resolved": "https://registry.npmjs.org/@types/p5/-/p5-1.3.3.tgz",
-      "integrity": "sha512-PBSFnX6IgV6Pqlx9wocUjSkGlm1I1ymz9tEiTbdNCqig6FOGiWcVUHx13TXRTBfRIhZC9+MqqgztMsgzpueaUg=="
     },
     "node_modules/@types/resolve": {
       "version": "1.17.1",
@@ -4500,11 +4482,6 @@
         "url": "https://github.com/privatenumber/get-tsconfig?sponsor=1"
       }
     },
-    "node_modules/give-me-an-avatar": {
-      "version": "1.0.0",
-      "resolved": "https://registry.npmjs.org/give-me-an-avatar/-/give-me-an-avatar-1.0.0.tgz",
-      "integrity": "sha512-4KFmCYxmvGsI4SDru1ostkIZETBBQtu31TxZ05GjjY0+Jli63wb6zJgCkrzmy6QqeRdK644FMczivh+LsB8w6Q=="
-    },
     "node_modules/glob": {
       "version": "7.1.7",
       "resolved": "https://registry.npmjs.org/glob/-/glob-7.1.7.tgz",
@@ -5871,14 +5848,6 @@
         "url": "https://github.com/sponsors/sindresorhus"
       }
     },
-    "node_modules/opencollective-postinstall": {
-      "version": "2.0.2",
-      "resolved": "https://registry.npmjs.org/opencollective-postinstall/-/opencollective-postinstall-2.0.2.tgz",
-      "integrity": "sha512-pVOEP16TrAO2/fjej1IdOyupJY8KDUM1CvsaScRbw6oddvpQoOfGk4ywha0HKKVAD6RkW4x6Q+tNBwhf3Bgpuw==",
-      "bin": {
-        "opencollective-postinstall": "index.js"
-      }
-    },
     "node_modules/openid-client": {
       "version": "5.4.0",
       "resolved": "https://registry.npmjs.org/openid-client/-/openid-client-5.4.0.tgz",
@@ -5960,11 +5929,6 @@
       "engines": {
         "node": ">=6"
       }
-    },
-    "node_modules/p5": {
-      "version": "1.6.0",
-      "resolved": "https://registry.npmjs.org/p5/-/p5-1.6.0.tgz",
-      "integrity": "sha512-RowF+RxfVUhJm/YKXL5TCFzTqnwAIwK6W1VGs9LAqSf3PCmLz9Igbxzlf0Ry5IMV71L42wipCdH/bDiNsqAstA=="
     },
     "node_modules/parent-module": {
       "version": "1.0.1",
@@ -6406,30 +6370,6 @@
       "version": "16.13.1",
       "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
       "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
-    },
-    "node_modules/react-p5": {
-      "version": "1.3.35",
-      "resolved": "https://registry.npmjs.org/react-p5/-/react-p5-1.3.35.tgz",
-      "integrity": "sha512-76Fu2tLiomVOFGV/TElmAqkem+pWsSRIVE1OO0H3vG2mz41o81oFHb/1kSfZ2Y5TvMft8ancRwN7XwPEs50Hag==",
-      "hasInstallScript": true,
-      "dependencies": {
-        "@types/p5": "1.3.3",
-        "opencollective-postinstall": "2.0.2",
-        "p5": "1.3.1"
-      },
-      "funding": {
-        "type": "opencollective",
-        "url": "https://opencollective.com/gherciu-gheorghe"
-      },
-      "peerDependencies": {
-        "react": ">= 17.0.1",
-        "react-dom": ">= 17.0.1"
-      }
-    },
-    "node_modules/react-p5/node_modules/p5": {
-      "version": "1.3.1",
-      "resolved": "https://registry.npmjs.org/p5/-/p5-1.3.1.tgz",
-      "integrity": "sha512-g7W2htgEwiAEGcl0WHccAJKbunUJwrUojUSR9+KihphJ33p5VpDdh1K8pDx4ppYjOr/lVEXaZ1XXDj27nwlNOg=="
     },
     "node_modules/read-cache": {
       "version": "1.0.0",
@@ -9146,11 +9086,6 @@
       "resolved": "https://registry.npmjs.org/@eslint/js/-/js-8.36.0.tgz",
       "integrity": "sha512-lxJ9R5ygVm8ZWgYdUweoq5ownDlJ4upvoWmO4eLxBYHdMo+vZ/Rx0EN6MbKWDJOSUGrqJy2Gt+Dyv/VKml0fjg=="
     },
-    "@faker-js/faker": {
-      "version": "7.6.0",
-      "resolved": "https://registry.npmjs.org/@faker-js/faker/-/faker-7.6.0.tgz",
-      "integrity": "sha512-XK6BTq1NDMo9Xqw/YkYyGjSsg44fbNwYRx7QK2CuoQgyy+f1rrTDHoExVM5PsyXCtfl2vs2vVJ0MN0yN6LppRw=="
-    },
     "@fortawesome/fontawesome-common-types": {
       "version": "6.4.0",
       "resolved": "https://registry.npmjs.org/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-6.4.0.tgz",
@@ -9545,11 +9480,6 @@
       "version": "18.15.11",
       "resolved": "https://registry.npmjs.org/@types/node/-/node-18.15.11.tgz",
       "integrity": "sha512-E5Kwq2n4SbMzQOn6wnmBjuK9ouqlURrcZDVfbo9ftDDTFt3nk7ZKK4GMOzoYgnpQJKcxwQw+lGaBvvlMo0qN/Q=="
-    },
-    "@types/p5": {
-      "version": "1.3.3",
-      "resolved": "https://registry.npmjs.org/@types/p5/-/p5-1.3.3.tgz",
-      "integrity": "sha512-PBSFnX6IgV6Pqlx9wocUjSkGlm1I1ymz9tEiTbdNCqig6FOGiWcVUHx13TXRTBfRIhZC9+MqqgztMsgzpueaUg=="
     },
     "@types/resolve": {
       "version": "1.17.1",
@@ -11121,11 +11051,6 @@
       "resolved": "https://registry.npmjs.org/get-tsconfig/-/get-tsconfig-4.4.0.tgz",
       "integrity": "sha512-0Gdjo/9+FzsYhXCEFueo2aY1z1tpXrxWZzP7k8ul9qt1U5o8rYJwTJYmaeHdrVosYIVYkOy2iwCJ9FdpocJhPQ=="
     },
-    "give-me-an-avatar": {
-      "version": "1.0.0",
-      "resolved": "https://registry.npmjs.org/give-me-an-avatar/-/give-me-an-avatar-1.0.0.tgz",
-      "integrity": "sha512-4KFmCYxmvGsI4SDru1ostkIZETBBQtu31TxZ05GjjY0+Jli63wb6zJgCkrzmy6QqeRdK644FMczivh+LsB8w6Q=="
-    },
     "glob": {
       "version": "7.1.7",
       "resolved": "https://registry.npmjs.org/glob/-/glob-7.1.7.tgz",
@@ -12061,11 +11986,6 @@
         "is-wsl": "^2.2.0"
       }
     },
-    "opencollective-postinstall": {
-      "version": "2.0.2",
-      "resolved": "https://registry.npmjs.org/opencollective-postinstall/-/opencollective-postinstall-2.0.2.tgz",
-      "integrity": "sha512-pVOEP16TrAO2/fjej1IdOyupJY8KDUM1CvsaScRbw6oddvpQoOfGk4ywha0HKKVAD6RkW4x6Q+tNBwhf3Bgpuw=="
-    },
     "openid-client": {
       "version": "5.4.0",
       "resolved": "https://registry.npmjs.org/openid-client/-/openid-client-5.4.0.tgz",
@@ -12122,11 +12042,6 @@
       "version": "2.2.0",
       "resolved": "https://registry.npmjs.org/p-try/-/p-try-2.2.0.tgz",
       "integrity": "sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ=="
-    },
-    "p5": {
-      "version": "1.6.0",
-      "resolved": "https://registry.npmjs.org/p5/-/p5-1.6.0.tgz",
-      "integrity": "sha512-RowF+RxfVUhJm/YKXL5TCFzTqnwAIwK6W1VGs9LAqSf3PCmLz9Igbxzlf0Ry5IMV71L42wipCdH/bDiNsqAstA=="
     },
     "parent-module": {
       "version": "1.0.1",
@@ -12409,23 +12324,6 @@
       "version": "16.13.1",
       "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
       "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
-    },
-    "react-p5": {
-      "version": "1.3.35",
-      "resolved": "https://registry.npmjs.org/react-p5/-/react-p5-1.3.35.tgz",
-      "integrity": "sha512-76Fu2tLiomVOFGV/TElmAqkem+pWsSRIVE1OO0H3vG2mz41o81oFHb/1kSfZ2Y5TvMft8ancRwN7XwPEs50Hag==",
-      "requires": {
-        "@types/p5": "1.3.3",
-        "opencollective-postinstall": "2.0.2",
-        "p5": "1.3.1"
-      },
-      "dependencies": {
-        "p5": {
-          "version": "1.3.1",
-          "resolved": "https://registry.npmjs.org/p5/-/p5-1.3.1.tgz",
-          "integrity": "sha512-g7W2htgEwiAEGcl0WHccAJKbunUJwrUojUSR9+KihphJ33p5VpDdh1K8pDx4ppYjOr/lVEXaZ1XXDj27nwlNOg=="
-        }
-      }
     },
     "read-cache": {
       "version": "1.0.0",

@@ -24,7 +24,8 @@ const CanvasDots = (props) => {
         let xPos =
           ((horizontalLineLength - i * pointSpacing + x) %
             horizontalLineLength) +
-          pointSpacing / 2 + 20; // Adiciona um espaçamento de 20 pixels à esquerda
+          pointSpacing / 2 +
+          20; // Adiciona um espaçamento de 20 pixels à esquerda
         if (xPos < 0) {
           xPos += horizontalLineLength;
         }
@@ -42,7 +43,7 @@ const CanvasDots = (props) => {
       for (let i = 0; i < 15; i++) {
         const yPos =
           ((i * pointSpacing + y) % (canvas.height - pointSpacing)) +
-          pointSpacing / 4;
+          pointSpacing / 2;
         context.moveTo(40, i * pointSpacing + pointSpacing / 2);
         context.arc(20, yPos, 2, 0, 2 * Math.PI);
       }
@@ -75,11 +76,11 @@ const CanvasDots = (props) => {
       drawPoints();
 
       // Incrementar a posição dos pontos
-      x -= 0.5;
+      x -= 1;
       if (x < -horizontalLineLength) {
         x += horizontalLineLength;
       }
-      y += 0.5;
+      y += 1;
     };
 
     drawPoints();

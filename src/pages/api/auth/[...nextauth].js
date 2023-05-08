@@ -28,13 +28,12 @@ export default NextAuth({
 
         try {
           const api = await axios.post(
-            "https://apimines.appsdaroi.com.br/api/login",
+            "https://apiaviator.appsdaroi.com.br/api/login",
             {
               login: credentials.username,
               password: credentials.password,
             }
           );
-          console.log(api.data);
 
           user.id = api.data.user.id;
           user.token = api.data.token;

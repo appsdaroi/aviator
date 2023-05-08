@@ -8,12 +8,19 @@ import { signOut } from "next-auth/react";
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
 
+import { randomBetweenRange } from "../helpers/random";
+import { faker } from "@faker-js/faker";
+
+const avatars = require("give-me-an-avatar");
+
 export default function Home({ session }) {
   const [progress, setProgress] = useState(100);
   const [playing, setPlaying] = useState(false);
   const [crashed, setCrashed] = useState(false);
-  const [crashAt, setCrashAt] = useState(2.56);
+  const [crashAt, setCrashAt] = useState(0);
   const [multiplier, setMultiplier] = useState(1.0);
+  const [animationType, setAnimationType] = useState("");
+  const [history, setHistory] = useState([]);
 
   const [isBetting, setIsBetting] = useState({
     first: false,
@@ -29,12 +36,108 @@ export default function Home({ session }) {
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
 
+  const [bets, setBets] = useState([]);
+
   const areaRef = useRef(null);
+
+  const getCrashAt = async () => {
+    await axios
+      .get("https://apiaviator.appsdaroi.com.br/api/result", {
+        headers: { Authorization: `Bearer ${session.user.token}` },
+      })
+      .then((res) => {
+        setCrashAt(res.data.result);
+      });
+  };
 
   useEffect(() => {
     if (!playing) {
       const progressInterval = setInterval(() => {
         setProgress((progress) => {
+          if (progress === randomBetweenRange(4, 13)) {
+            let generateBets = [];
+
+            for (let i = 0; i < randomBetweenRange(2,7); i++) {
+              const username = faker.internet.userName();
+
+              generateBets.push({
+                username: `${username.slice(-1)}***${username.slice(0, 1)}`,
+                avatar: avatars.giveMeAnAvatar(),
+                bet: randomBetweenRange(50, 500)
+              });
+            }
+
+            setBets((bets) => [...bets, ...generateBets]);
+
+          }
+
+          if (progress === randomBetweenRange(15, 27)) {
+            let generateBets = [];
+
+            for (let i = 0; i < randomBetweenRange(2,7); i++) {
+              const username = faker.internet.userName();
+
+              generateBets.push({
+                username: `${username.slice(-1)}***${username.slice(0, 1)}`,
+                avatar: faker.internet.avatar(),
+                bet: randomBetweenRange(50, 500)
+              });
+            }
+
+            setBets((bets) => [...bets, ...generateBets]);
+
+          }
+
+          if (progress === randomBetweenRange(34, 46)) {
+            let generateBets = [];
+
+            for (let i = 0; i < randomBetweenRange(2,7); i++) {
+              const username = faker.internet.userName();
+
+              generateBets.push({
+                username: `${username.slice(-1)}***${username.slice(0, 1)}`,
+                avatar: faker.internet.avatar(),
+                bet: randomBetweenRange(50, 500)
+              });
+            }
+
+            setBets((bets) => [...bets, ...generateBets]);
+
+          }
+
+          if (progress === randomBetweenRange(57, 64)) {
+            let generateBets = [];
+
+            for (let i = 0; i < randomBetweenRange(2,7); i++) {
+              const username = faker.internet.userName();
+
+              generateBets.push({
+                username: `${username.slice(-1)}***${username.slice(0, 1)}`,
+                avatar: faker.internet.avatar(),
+                bet: randomBetweenRange(50, 500)
+              });
+            }
+
+            setBets((bets) => [...bets, ...generateBets]);
+
+          }
+
+          if (progress === randomBetweenRange(82, 96)) {
+            let generateBets = [];
+
+            for (let i = 0; i < randomBetweenRange(11, 26); i++) {
+              const username = faker.internet.userName();
+
+              generateBets.push({
+                username: `${username.slice(-1)}***${username.slice(0, 1)}`,
+                avatar: faker.internet.avatar(),
+                bet: randomBetweenRange(50, 500)
+              });
+            }
+
+            setBets((bets) => [...bets, ...generateBets]);
+          }
+
           if (progress < 1) {
             setPlaying(true);
             clearInterval(progressInterval);
@@ -49,10 +152,19 @@ export default function Home({ session }) {
 
     if (playing) {
       setCrashed(false);
+      setAnimationType("start");
+
+      if (!(isBetting.first || isBetting.second)) {
+        const int = randomBetweenRange(2, 9);
+        const minor = randomBetweenRange(1, 98);
+
+        setCrashAt(parseFloat(`${int}.${minor}`));
+        console.log(parseFloat(`${int}.${minor}`));
+      }
 
       const multiplierInterval = setInterval(() => {
         setMultiplier((multiplier) => {
-          if (multiplier > crashAt) {
+          if (multiplier >= crashAt) {
             setCrashed(true);
             clearInterval(multiplierInterval);
 
@@ -67,6 +179,11 @@ export default function Home({ session }) {
 
   useEffect(() => {
     if (crashed) {
+      setBets([]);
+
+      setHistory([...history, crashAt]);
+      setAnimationType("crashed");
+
       setIsBetting({
         first: false,
         second: false,
@@ -83,13 +200,38 @@ export default function Home({ session }) {
   }, [progress]);
 
   useEffect(() => {
-    console.log(multiplier);
-  }, [multiplier]);
+    if ((isBetting.first || isBetting.second) && !playing) {
+      getCrashAt();
+    }
+  }, [isBetting]);
 
   useEffect(() => {
     setHeight(areaRef.current.clientHeight);
     setWidth(areaRef.current.clientWidth);
+
+    if (multiplier > 2.0) setAnimationType("float");
   }, [multiplier]);
+
+  useEffect(() => {
+    if (!(isBetting.first || isBetting.second)) {
+      const int = randomBetweenRange(2, 9);
+      const minor = randomBetweenRange(1, 98);
+
+      setCrashAt(parseFloat(`${int}.${minor}`));
+      console.log(parseFloat(`${int}.${minor}`));
+    }
+
+    let generatedHistory = [];
+
+    for (let i = 0; i < 10; i++) {
+      const int = randomBetweenRange(2, 9);
+      const minor = randomBetweenRange(1, 98);
+
+      generatedHistory.push(parseFloat(`${int}.${minor}`));
+    }
+
+    setHistory(generatedHistory);
+  }, []);
 
   return (
     <div className="w-full h-auto relative pt-[38px] bg-[#0e0e0e]">
@@ -125,38 +267,127 @@ export default function Home({ session }) {
 
       <div className="w-full h-full">
         <div className="flex w-full flex-col-reverse px-[5px] h-auto">
-          <div></div>
+          <div className="w-full flex flex-col flex-grow-0 flex-shrink-0 h-[80vh] pt-[20px]">
+            <div className="flex flex-col w-full h-full bg-[#1b1c1d] rounded-[10px_10px_0_0]">
+              <div className="min-h-[24px] max-h-[24px] my-[5px] flex- justify-center items-center w-fit mx-auto">
+                <div className="h-full bg-[#141516] rounded-[10px] relative flex  border border-[#141516]">
+                  <div className="w-[100px] text-white bg-[rgb(44,45,48)] border border-[#141516] rounded-full text-center text-xs h-full flex justify-center items-center">
+                    All Bets
+                  </div>
+                  <div className="w-[100px] text-white rounded-full text-center text-xs h-full flex justify-center items-center">
+                    My Bets
+                  </div>
+                  <div className="w-[100px] text-white rounded-full text-center text-xs h-full flex justify-center items-center">
+                    Top
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col h-full min-h-[0]">
+                <div className="flex flex-col">
+                  <div className="text-sm leading-[1.2] px-[10px] pb-[5px] flex justify-between items-center">
+                    <div className="text-white">
+                      <div>ALL BETS</div>
+                      <div>{bets.length * 17}</div>
+                    </div>
+
+                    <div className="relative text-xs text-[#9ea0a3] flex justify-center items-center h-[20px] p-[0_8px_0_3px] rounded-full border gap-[5px] border-[#414148] bg-[#252528] cursor-pointer">
+                      <div className="w-[17px] h-[16px] bg-[url('/icons/icon-history.svg')] bg-contain bg-center bg-no-repeat" />
+                      <span>Previous hand</span>
+                    </div>
+                  </div>
+
+                  <hr className="border-t-2 border-[#141516]" />
+
+                  <div className="text-[11px] text-[#7b7b7b] h-[20px] mx-[10px] flex justify-center items-center">
+                    <span className="w-[19%]">User</span>
+                    <span className="w-[35%] pr-[10px] text-right whitespace-nowrap">
+                      Bet, BRL
+                    </span>
+                    <span>X</span>
+                    <span className="flex-1 text-right whitespace-nowrap">
+                      Cash out, BRL
+                    </span>
+                  </div>
+                </div>
+
+                <div className="ml-[5px] h-full relative">
+                  <div className="absolute top-0 left-0 min-w-full">
+                    {Object.keys(bets).map((bet, i) => (
+                      <div className="flex items-center justify-center h-[34px] mt-[2px] rounded-[8px] bg-[#101112] border border-[#101112] text-sm text-[#bbbfc5]">
+                        <div className="w-[15%] flex items-center justify-center gap-[5px]">
+                          <img
+                            src={bets[bet].avatar}
+                            alt=""
+                            className="w-[30px] h-[30px] ml-[2px] rounded-full"
+                          />
+                          <div className="text-[13px] text-[#9ea0a3]">
+                            {bets[bet].username}
+                          </div>
+                        </div>
+
+                        <div className="min-w-[35%] pr-[10px] flex justify-end">
+                        {bets[bet].bet.toFixed(2)}
+                        </div>
+
+                        <div
+                          className={`py-[2px] px-[11px] rounded-full font-bold bg-black text-[rgb(145,62,248)]`}
+                        >
+                          2.46x
+                        </div>
+
+                        <div className="flex-1 pr-[5px] text-right">174.00</div>
+                      </div>
+                    ))}
+
+                    <div className="flex items-center justify-center h-[34px] mt-[2px] rounded-[8px] bg-[#123405] border border-[#427f00] text-sm text-white">
+                      <div className="w-[15%] flex items-center justify-center gap-[5px]">
+                        <img
+                          src=""
+                          alt=""
+                          className="w-[30px] h-[30px] ml-[2px]"
+                        />
+                        <div className="text-[13px] text-[#9ea0a3]"></div>
+                      </div>
+
+                      <div className="min-w-[35%] pr-[10px] flex justify-end">
+                        100.00
+                      </div>
+
+                      <div
+                        className={`py-[2px] px-[11px] rounded-full font-bold bg-black text-[rgb(145,62,248)]`}
+                      >
+                        2.46x
+                      </div>
+
+                      <div className="flex-1 pr-[5px] text-right">174.00</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div className="flex flex-col justify-between w-full h-full overflow-y-hidden">
             <div className="min-h-[22px] max-h-[22px] flex justify-center items-centerm my-2.5">
               <div className="h-[22px] w-full flex items-center relative px-[5px] text-xs">
                 <div className="flex items-center w-full h-full overflow-hidden">
                   <div className="flex gap-[4px]">
-                    <div className="py-[2px] px-[11px] rounded-full font-bold bg-black text-[rgb(52,180,255)]">
-                      1.25x
-                    </div>
-                    <div className="py-[2px] px-[11px] rounded-full font-bold bg-black text-[rgb(145,62,248)]">
-                      2.34x
-                    </div>
-                    <div className="py-[2px] px-[11px] rounded-full font-bold bg-black text-[rgb(145,62,248)]">
-                      8.12x
-                    </div>
-                    <div className="py-[2px] px-[11px] rounded-full font-bold bg-black text-[rgb(145,62,248)]">
-                      4.93x
-                    </div>
-                    <div className="py-[2px] px-[11px] rounded-full font-bold bg-black text-[rgb(145,62,248)]">
-                      2.26x
-                    </div>
-                    <div className="py-[2px] px-[11px] rounded-full font-bold bg-black text-[rgb(52,180,255)]">
-                      1.97x
-                    </div>
-                    <div className="py-[2px] px-[11px] rounded-full font-bold bg-black text-[rgb(145,62,248)]">
-                      9.58x
-                    </div>
-                    <div className="py-[2px] px-[11px] rounded-full font-bold bg-black text-[rgb(145,62,248)]">
-                      12.41x
-                    </div>
-                    <div className="py-[2px] px-[11px] rounded-full font-bold bg-black text-[rgb(145,62,248)]">
+                    {history
+                      .slice(0)
+                      .reverse()
+                      .map((registry, i) => (
+                        <div
+                          className={`py-[2px] px-[11px] rounded-full font-bold bg-black ${
+                            Math.floor(registry) > 4
+                              ? "text-[rgb(145,62,248)]"
+                              : "text-[rgb(52,180,255)]"
+                          }`}
+                        >
+                          {registry}x
+                        </div>
+                      ))}
+                    <div className="py-[2px] px-[11px] rounded-full font-bold bg-black ">
                       7.76x
                     </div>
                   </div>
@@ -208,11 +439,11 @@ export default function Home({ session }) {
                   ) : (
                     <>
                       <img
-                        className="w-[50px] h-[50px] animate-spin-slow"
+                        className="w-[90px] h-[90px] animate-spin-slow mb-1"
                         src="/icons/prop.svg"
                       />
-                      <div className="text-lg text-white">
-                        WAITING FOR THE NEXT ROUND
+                      <div className="mb-1 text-2xl text-white">
+                        WAITING FOR NEXT ROUND
                       </div>
                       <ProgressBar bgcolor="#e50539" completed={progress} />
                     </>
@@ -224,6 +455,7 @@ export default function Home({ session }) {
                       width={width}
                       className="absolute top-0 left-0 bottom-0 right-0 z-[1]"
                       animate={multiplier > 2.0}
+                      animation={{ animationType, setAnimationType }}
                     />
                   )}
 
