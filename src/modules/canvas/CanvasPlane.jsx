@@ -6,12 +6,20 @@ const CanvasPlane = (props) => {
 
   const images = [
     "/icons/plane-0.svg",
+    "/icons/plane-0.svg",
+    "/icons/plane-0.svg",
+    "/icons/plane-1.svg",
+    "/icons/plane-1.svg",
     "/icons/plane-1.svg",
     "/icons/plane-2.svg",
+    "/icons/plane-2.svg",
+    "/icons/plane-2.svg",
+    "/icons/plane-3.svg",
+    "/icons/plane-3.svg",
     "/icons/plane-3.svg",
   ];
 
-  const [animationTime, setAnimationTime] = useState(8000); // Tempo de duração da animação (em milissegundos)
+  const [animationTime, setAnimationTime] = useState(7800); // Tempo de duração da animação (em milissegundos)
   const { animationType, setAnimationType } = props.animation;
 
   useEffect(() => {
@@ -121,8 +129,8 @@ const CanvasPlane = (props) => {
 
       if (animationType == "float") {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        const x = Math.sin((t * canvas.width) / 3) * 20 + 280;
-        const y = Math.sin((t * canvas.height) / 3) * 30 + 40;
+        const x = Math.sin((t * canvas.width) / 3) * 20 + 222;
+        const y = Math.sin((t * canvas.height) / 3) * 30 + 32;
         ctx.drawImage(image, x, y, image.width / 1.5, image.height / 1.5);
 
         // Definir os pontos iniciais e finais da linha
