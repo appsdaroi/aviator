@@ -3,12 +3,16 @@ import React, { useEffect, useRef, useState } from "react";
 const CanvasPlane = (props) => {
   const canvasRef = useRef(null);
   const image = new Image();
-  image.src = "/icons/plane-0.svg";
+
+  const images = [
+    "/icons/plane-0.svg",
+    "/icons/plane-1.svg",
+    "/icons/plane-2.svg",
+    "/icons/plane-3.svg",
+  ];
 
   const [animationTime, setAnimationTime] = useState(7800); // Tempo de duração da animação (em milissegundos)
-   // Tempo de duração da animação (em milissegundos)
-   const {animationType, setAnimationType} = props.animation;
-
+  const { animationType, setAnimationType } = props.animation;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -16,18 +20,24 @@ const CanvasPlane = (props) => {
 
     let t = 0; // tempo
     const steps = (animationTime / 1000) * 60; // número de etapas para a animação, baseado no tempo de duração e na taxa de atualização do navegador (60 fps)
-    const controlPoints = [
-      [image.width / 1.7, canvas.height - image.height],
-      [canvas.width * 0.8, canvas.height - image.height],
-      [canvas.width - 60, 40],
-    ];
+
+    let currentImageIndex = 0;
 
     const render = () => {
+      image.src = images[currentImageIndex];
+      currentImageIndex = (currentImageIndex + 1) % images.length;
+
+      const controlPoints = [
+        [image.width / 1.7, canvas.height - image.height],
+        [canvas.width * 0.8, canvas.height - image.height],
+        [canvas.width - 60, 40],
+      ];
 
       if (animationType == "start") {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         const x = parabolicBezier(controlPoints, t)[0] - image.width / 1.8;
-        const y = parabolicBezier(controlPoints, t)[1] - image.height / 3.7 + 15;
+        const y =
+          parabolicBezier(controlPoints, t)[1] - image.height / 3.7 + 15;
         ctx.drawImage(image, x, y, image.width / 1.5, image.height / 1.5);
 
         // Definir os pontos iniciais e finais da linha
@@ -67,10 +77,6 @@ const CanvasPlane = (props) => {
         // Finalizar o desenho da linha
         ctx.stroke();
 
-
-
-
-        
         // Definir a cor da linha
         ctx.strokeStyle = "red";
 
@@ -115,8 +121,8 @@ const CanvasPlane = (props) => {
 
       if (animationType == "float") {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        const x = (Math.sin(t * canvas.width / 3) * 20) + 280;
-        const y = (Math.sin(t * canvas.height / 3) * 30) + 40;
+        const x = Math.sin((t * canvas.width) / 3) * 20 + 280;
+        const y = Math.sin((t * canvas.height) / 3) * 30 + 40;
         ctx.drawImage(image, x, y, image.width / 1.5, image.height / 1.5);
 
         // Definir os pontos iniciais e finais da linha
@@ -156,10 +162,6 @@ const CanvasPlane = (props) => {
         // Finalizar o desenho da linha
         ctx.stroke();
 
-        
-
-
-        
         // Definir a cor da linha
         ctx.strokeStyle = "red";
 
@@ -202,8 +204,8 @@ const CanvasPlane = (props) => {
 
       if (animationType == "crashed") {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        const x = (t * canvas.width * 700) + 300;
-        const y = (t * canvas.height) - 50;
+        const x = t * canvas.width * 700 + 300;
+        const y = t * canvas.height - 50;
         ctx.drawImage(image, x, y, image.width / 1.7, image.height / 1.7);
 
         // Desenha a próxima etapa da animação

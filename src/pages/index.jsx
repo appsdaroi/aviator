@@ -330,38 +330,16 @@ export default function Home({ session }) {
                         {bets[bet].bet.toFixed(2)}
                         </div>
 
-                        <div
+                        {/* <div
                           className={`py-[2px] px-[11px] rounded-full font-bold bg-black text-[rgb(145,62,248)]`}
                         >
                           2.46x
-                        </div>
+                        </div> */}
 
-                        <div className="flex-1 pr-[5px] text-right">174.00</div>
+                        <div className="flex-1 pr-[5px] text-right"></div>
                       </div>
                     ))}
 
-                    <div className="flex items-center justify-center h-[34px] mt-[2px] rounded-[8px] bg-[#123405] border border-[#427f00] text-sm text-white">
-                      <div className="w-[15%] flex items-center justify-center gap-[5px]">
-                        <img
-                          src=""
-                          alt=""
-                          className="w-[30px] h-[30px] ml-[2px]"
-                        />
-                        <div className="text-[13px] text-[#9ea0a3]"></div>
-                      </div>
-
-                      <div className="min-w-[35%] pr-[10px] flex justify-end">
-                        100.00
-                      </div>
-
-                      <div
-                        className={`py-[2px] px-[11px] rounded-full font-bold bg-black text-[rgb(145,62,248)]`}
-                      >
-                        2.46x
-                      </div>
-
-                      <div className="flex-1 pr-[5px] text-right">174.00</div>
-                    </div>
                   </div>
                 </div>
               </div>
