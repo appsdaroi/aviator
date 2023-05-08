@@ -11,7 +11,7 @@ const CanvasPlane = (props) => {
     "/icons/plane-3.svg",
   ];
 
-  const [animationTime, setAnimationTime] = useState(7800); // Tempo de duração da animação (em milissegundos)
+  const [animationTime, setAnimationTime] = useState(8000); // Tempo de duração da animação (em milissegundos)
   const { animationType, setAnimationType } = props.animation;
 
   useEffect(() => {

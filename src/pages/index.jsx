@@ -499,7 +499,7 @@ export default function Home({ session }) {
 
             <div className="flex justify-center shrink-0 pt-[5px] gap-[5px] flex-wrap">
               <div className="h-auto min-h-[150px] w-full max-w-[750px] min-w-[310px] rounded-[20px]">
-                <div className="flex relative w-full flex-col justify-center rounded-[10px] bg-[#1b1c1d] h-full m-[0_auto] border border-[transparent]">
+              <div className={`flex relative w-full flex-col justify-center rounded-[10px] bg-[#1b1c1d] h-full m-[0_auto] ${isBetting.second ? playing && !crashed ? "border border-[#d07206]" : "border border-[#cb011a]" : ""}`}>
                   <div className="h-[24px] text-xs mb-auto mt-2.5">
                     <div className="h-full bg-[#141516] rounded-[10px] border border-[#141516] relative flex justify-center items-center w-max mx-auto">
                       <div className="relative w-[100px] h-full text-center rounded-[10px] text-white leading-[22px] bg-[rgb(44,45,48)]">
@@ -610,6 +610,7 @@ export default function Home({ session }) {
 
                             setBet1(input1);
                           }}
+                          disabled={playing}
                           className="w-full h-full rounded-[20px] text-xl border border-[#b2f2a3] bg-[#28a909] shadow-[inset_0_1px_1px_#ffffff80] text-white text-center"
                         >
                           <span className="flex flex-col items-center justify-center">
@@ -633,7 +634,7 @@ export default function Home({ session }) {
               </div>
 
               <div className="h-auto min-h-[150px] w-full max-w-[750px] min-w-[310px] rounded-[20px]">
-                <div className="flex relative w-full flex-col justify-center rounded-[10px] bg-[#1b1c1d] h-full m-[0_auto] border border-[transparent]">
+                <div className={`flex relative w-full flex-col justify-center rounded-[10px] bg-[#1b1c1d] h-full m-[0_auto] ${isBetting.second ? playing && !crashed ? "border border-[#d07206]" : "border border-[#cb011a]" : ""}`}>
                   <div className="h-[24px] text-xs mb-auto mt-2.5">
                     <div className="h-full bg-[#141516] rounded-[10px] border border-[#141516] relative flex justify-center items-center w-max mx-auto">
                       <div className="relative w-[100px] h-full text-center rounded-[10px] text-white leading-[22px] bg-[rgb(44,45,48)]">
@@ -744,6 +745,7 @@ export default function Home({ session }) {
 
                             setBet2(input2);
                           }}
+                          disabled={playing}
                           className="w-full h-full rounded-[20px] text-xl border border-[#b2f2a3] bg-[#28a909] shadow-[inset_0_1px_1px_#ffffff80] text-white text-center"
                         >
                           <span className="flex flex-col items-center justify-center">
