@@ -35,9 +35,9 @@ export default NextAuth({
             }
           );
 
-          user.id = api.data.user.id;
+          user.id = api.data.player.id;
           user.token = api.data.token;
-          user.username = api.data.user.login;
+          user.username = api.data.player.login;
           user.balance = randomBetweenRange(250000, 800000);
 
           return user;
